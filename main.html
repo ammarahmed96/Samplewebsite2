@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <title>Axavi Studio</title>
+</head>
+
+<script>
+    $(document).ready(function(){
+        // Add smooth scrolling to all links in navbar + footer link
+        $(".navbar a, footer a[href='#home']").on('click', function(event) {
+    
+        // Make sure this.hash has a value before overriding default behavior
+        if (this.hash !== "") {
+        event.preventDefault();
+    
+        // Store hash
+        var hash = this.hash;
+        $('html, body').animate({
+            scrollTop: $(hash).offset().top
+        }, 900, function(){
+    
+            // Add hash (#) to URL when done scrolling (default click behavior)
+            window.location.hash = hash;
+            });
+        }
+        });
+    })
+
+    function modalbox(){
+        var name = document.getElementById('name').value;
+        var email = document.getElementById('email').value;
+        var feed = document.getElementById('feedback').value;
+        var modal = document.getElementById('myModal');
+        var senddata = {Name:name, Email:email, Feedback:feed}
+
+        // modal data output
+        modal.style.display = "block";
+        document.getElementById('Nameholder').innerHTML = "Name : " + name;
+        document.getElementById('Emailholder').innerHTML = "Email : " + email;
+        document.getElementById('Feedbackholder').innerHTML = "FeedBack : " + feed;
+        // modal close by clicking anywhere
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        $.ajax({
+            type: "POST",
+            data :JSON.stringify(senddata),
+            url: "http://localhost:3000/profile",
+            contentType: "application/json",
+            success: function(data) {
+                console.log('success');
+                console.log(JSON.stringify(senddata));
+            }
+        });
+    }
+
+</script>
+
+<style>
+    .navbar {
+        margin-bottom: 0;
+        background-color: white;
+        z-index: 1;
+        border: 0;
+        font-size: 16px !important;
+        line-height: 1.42857143 !important;
+        letter-spacing: 4px;
+        border-radius: 0;
+    }
+    .navbar ul li a, .navbar .navbar-brand {
+        color: #000 !important;
+    }
+    .navbar-nav li a:hover, .navbar-nav li.active a {
+        color: #fff !important;
+        background-color: #444 !important;
+    }
+    .padding-60 {
+        padding: 60px, 50px;
+    }
+    .marginrl{
+        margin-right: 50px;
+        margin-left: 50px;
+    }
+    .margintb{
+        margin-top: 40px;
+        margin-bottom: 10px;
+    }
+    body{
+        line-height: 2;
+        margin-bottom: 30px;
+    }
+    .jumbotron {
+        position: relative;
+        text-align: center;
+        color: white;
+        background: rgba(0, 0, 0, 0.9);
+    }
+    .centered{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(0, 0, 0, 0.7);
+    }
+    .fontaboutus{
+        font-family: 'Roboto Slab';
+    }
+    .parasize{
+        font-size: 18px;
+    }
+    .tabfont{
+        font-family: 'Rhodium Libre'
+    }
+    .marginbottom{
+        margin-bottom: 20px;
+    }
+
+    .btn {
+        border: none;
+        outline: none;
+        padding: 12px 16px;
+        background-color: white;
+        cursor: pointer;
+    }
+    .btn:hover {
+        background-color: #ddd;
+    }
+    .btn.active {
+        background-color: #666;
+        color: white;
+    }
+    .sizee{
+        font-size: 20px;
+    }
+
+    /* footer */
+    #container {
+        display: inline-block;
+    }
+    footer {
+        background-color:#333;
+        position: absolute;
+        width: 100%;
+    }
+    .alignLeft {
+        color: white;
+        float: left;
+    }
+    .alignRight {
+        color: white;
+        float: right;
+    }
+    .invert {
+        filter: invert(100%);
+        color: black;
+    }
+    .col-sm-4 {
+        min-height: 350px;
+    } 
+
+    .parallax { 
+        /* The image used */
+        background-image: url("/pics/img2.jpg");
+        height: 100%;
+        background-attachment: fixed;
+        background-position: center;
+        background-size: cover;
+    }
+    .circle {
+        width: 300px;
+        height: 300px;
+        border-radius: 50%;
+        color: #fff;
+        text-align: center;
+        vertical-align: middle;
+        background: transparent;
+        border: 2px solid white;
+        display: table-cell;
+    }
+    .center-block {
+        margin-left:auto;
+        margin-right:auto;
+        display: table;
+    }
+    .imagesize{
+        font-size: 70px;
+    }
+    .txtsize{
+        font-size: 20px;
+    }
+    .right-block {
+        display: table;
+        padding-top: 10%;
+    }
+    .left-block {
+        display: table;
+        padding-top: 10%;
+    }
+    .padding-0{
+        padding-right:0;
+        padding-left:0;
+    }
+
+    /* design practice */
+    .testingpic{
+        clip-path: polygon(0% 0%, 0 90%, 50% 100%, 50% 87%, 100% 100%, 100% 16%, 50% 2%, 50% 15%)
+    }
+    .parallaxheight {
+        height: 600px;
+    }
+
+    /* Modal */
+    /* The Modal (background) */
+    .modal {
+        position: fixed;
+        z-index: 2;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0,0,0,0.8); /* Black w/ opacity */
+    }
+    
+    /* Modal Content */
+    .modal-content {
+        position: fixed;
+        margin-top: 200px;
+        background-color: #eeeeee;
+        width: 100%;
+    }
+    
+    .modal-header {
+        padding: 2px 16px;
+        background-color: #5cb85c;
+        color: white;
+    }
+
+</style>
+
+<body id="home" data-spy="scroll" data-target=".navbar" data-offset="60">
+    <nav class="navbar navbar-fixed-top" id="navigationbar">
+        <div class="container-fluid  marginrl">
+            <div class="navbar-header">
+            <a class="navbar-brand" href="#">MY WEBSITE</a>
+            </div>
+            <div id="myNavbar">
+            <ul class="nav navbar-nav navbar-right">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#aboutus">About Us</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#portfolio">Portfolio</a></li>
+            <li><a href="#team">Team</a></li>
+            <li><a href="#contact">Contact</a></li>
+            </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="jumbotron">
+        <img src="/pics/img1.jpg" style="width: 100%; height: 100%;">
+        <div class="centered">
+            <h1>AXAVI STUDIO</h1>
+            <h4>IMAGINE ♦ DESIGN ♦ BUILD ♦ TEST ♦ REPEAT</h4>
+        </div>
+    </div>
+
+    <div class="tabfont marginrl padding-60">
+        <h3 id="aboutus">ABOUT US</h3>
+    </div>
+    
+    <hr class="marginrl" style="border:2px solid #000000">
+
+    <div class="row" style="width: 100%">
+        <div class="col-sm-6">
+            <img src="/pics/logo.jpg" style="width: 100%; height: 300px;" alt="Logo"> 
+        </div>
+        <div class="col-sm-6">
+            <h2 class="fontaboutus">Our Work != Average</h2>
+            <p class="fontaboutus parasize">Take a forever vacation for yourself and let us handle all the technical stuff. 
+                Axavistudio is here to solve all your IT problems</p>
+            <h2 class="fontaboutus">You name it, We make it</h2>
+            <p class="fontaboutus parasize">We are a team of Developers Designers Programmers and Business Developers. All we need is
+                to get encoutered with the problem and finding the solution is upto us. What you have to do is;
+                Let us know your problem and sit back and relax. Solving your problem is our job.</p>
+        </div>
+    </div>
+
+    <div class="parallax testingpic">
+
+        <div id="services" class="tabfont marginrl">
+            <h3><br><br>SERVICES</h3>
+        </div>
+        
+        <hr class="marginrl" style="border:2px solid #000000">
+
+        <div class="grid marginrl margintb">
+            <div class="row marginbottom invert">
+                <div class="col-sm-4">
+                    <div class="center-block">
+                        <div class="circle">
+                            <p class="glyphicon glyphicon-list-alt imagesize"></p>
+                            <p class="txtsize">WEB DEVELOPMENT</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="center-block">
+                        <div class="circle">
+                            <p class="glyphicon glyphicon-phone imagesize"></p>
+                            <p class="txtsize">MOBILE DEVELOPMENT</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="center-block">
+                        <div class="circle">
+                            <p><img class="invert" src="/pics/brush.png"></p>
+                            <p class="txtsize">MOBILE DEVELOPMENT</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    
+    <div id="portfolio" class="tabfont marginrl margintb">
+        <h3>PORTFOLIO</h3>
+    </div>
+    
+    <hr class="marginrl" style="border:2px solid #000000">
+
+    <div id="myBtnContainer" class="marginrl">
+        <button class="btn active" onclick="filterSelection('all')"> ALL</button>
+        <button class="btn" onclick="filterSelection('webdes')"> WEB DESIGN</button>
+        <button class="btn" onclick="filterSelection('mobdes')"> MOBILE DESIGN</button>
+        <button class="btn" onclick="filterSelection('graphi')"> GRAPHICS</button>
+    </div>
+
+    <div class="grid marginrl margintb">
+        <div class="row marginbottom">
+            <div class="col-sm-3 webdes">
+                <div class="content">
+                <a href="https://en.wikipedia.org/wiki/Web_design" target="_blank"><img src="/pics/wd.jpg" alt="Web Design" style="width:100%"></a>
+                </div>
+            </div>
+            <div class="col-sm-3 webdes">
+                <div class="content">
+                <a href="https://en.wikipedia.org/wiki/Web_design" target="_blank"><img src="/pics/wd.jpg" alt="Web Design" style="width:100%"></a>
+                </div>
+            </div>
+            <div class="col-sm-3 graphi">
+                <div class="content">
+                <img src="/pics/graphic.jpg" alt="Graphics" style="width:100%">
+                </div>
+            </div>
+            <div class="col-sm-3 mobdes">
+                <div class="content">
+                <a href="https://www.smashingmagazine.com/2018/02/comprehensive-guide-to-mobile-app-design/" target="_blank"><img src="/pics/md.jpeg" alt="Mobile" style="width:100%"></a>
+                </div>
+            </div>
+        </div>
+    
+        <div class="row marginbottom">    
+            <div class="col-sm-3 graphi">
+                <div class="content">
+                <img src="/pics/graphic.jpg" alt="Graphics" style="width:100%">
+                </div>
+            </div>
+            <div class="col-sm-3 mobdes">
+                <div class="content">
+                <a href="https://www.smashingmagazine.com/2018/02/comprehensive-guide-to-mobile-app-design/"><img src="/pics/md.jpeg" alt="Mobile" style="width:100%"></a>
+                </div>
+            </div>
+            <div class="col-sm-3 webdes">
+                <div class="content">
+                <a href="https://en.wikipedia.org/wiki/Web_design" target="_blank"><img src="/pics/wd.jpg" alt="Web Design" style="width:100%"></a>
+                </div>
+            </div>
+            <div class="col-sm-3 mobdes">
+                <div class="content">
+                <a href="https://www.smashingmagazine.com/2018/02/comprehensive-guide-to-mobile-app-design/"><img src="/pics/md.jpeg" alt="Mobile" style="width:100%"></a>
+                </div>
+            </div>
+        </div>
+    
+        <div class="row">    
+            <div class="col-sm-3 graphi">
+                <div class="content">
+                <img src="/pics/graphic.jpg" alt="Graphics" style="width:100%">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="parallax parallaxheight testingpic">
+
+        <div id="team" class="tabfont marginrl">
+            <h3><br><br><br>TEAM</h3>
+        </div>
+        
+        <hr class="marginrl" style="border:2px solid #000000">
+
+        <div class="grid marginrl margintb">
+            <div class="row marginbottom">
+                <div class="col-sm-6 padding-0">
+                <!-- <div class="parallax parallaxheight testingpic"> -->
+                    <div class="left-block center-block">
+                        <div class="circle invert">
+                            <p class="glyphicon glyphicon-list-alt imagesize"></p>
+                            <p class="txtsize">WEB DEVELOPMENT</p>
+                        </div>
+                    </div>
+                <!-- </div> -->
+                </div>
+                <div class="col-sm-6 padding-0">
+                <!-- <div class="parallax parallaxheight testingpic"> -->
+                    <div class="right-block center-block">
+                        <div class="circle invert">
+                            <p class="glyphicon glyphicon-phone imagesize"></p>
+                            <p class="txtsize">MOBILE DEVELOPMENT</p>
+                        </div>
+                    </div>
+                <!-- </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tabfont marginrl margintb">
+        <h3 id="contact">CONTACT</h3>
+    </div>
+    
+    <hr class="marginrl" style="border:2px solid #000000">
+
+    <div class="grid marginrl margintb">
+        <div class="row marginbottom">
+            <div class="col-sm-6">
+                <p class="sizee"><strong>EMAIL: </strong>am.ah2417@gmail.com</p>
+                <p class="sizee"><strong>PHONE: </strong>+92 304 405 7679</p>
+            </div>
+            <div class="col-sm-6">
+                <input class="form-control marginbottom" id="name" placeholder="Name" type="text" required>
+                <input class="form-control margin" id="email" placeholder="Email ID" type="email" required>
+            </div>
+        </div>
+        <div class="row marginbottom">
+            <div class="col-sm-6">
+                <p class="sizee"><strong>ADDRESS: </strong>84-E, Axavi Tower, Main Market, Gulberg III, Lahore, Pakistan</p>
+            </div>
+            <div class="col-sm-6">
+                <textarea class="form-control marginbottom" id="feedback" placeholder="Your Feedback Here" rows="5"></textarea>
+                <button onclick="modalbox();" id="alertbtn" class="stylebtn">SEND</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="container">
+        <div class="randomContent">
+            <footer>
+                <div class="marginrl">
+                    <span class="alignLeft">Copyrights © 2016 | axavistudio.com. All rights reserved.</span>
+                    <span class="alignRight invert">|
+                        <a href="https://www.facebook.com/ammarahmed696" target="_blank"><img src="/pics/facebook.png" style="width: 20px"></a>|
+                        <a href=""><img src="/pics/twitter.png" style="width: 20px"></a>|
+                        <a href="https://www.google.org/" target="_blank"><img src="/pics/google.png" style="width: 20px"></a>|
+                        <a href="https://www.linkedin.com/in/ammarahmed96/" target="_blank"><img src="/pics/linkedin.png" style="width: 20px"></a>|
+                    </span>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+    
+        <!-- Modal content -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Data Entered By The User</h2>
+            </div>
+            <div class="modal-body">
+                <br>
+                <p id="Nameholder"></p>
+                <p id="Emailholder"></p>
+                <p id="Feedbackholder"></p>
+            </div>
+        </div>
+    
+    </div>
+
+</body>
+</html>
